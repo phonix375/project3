@@ -1,0 +1,61 @@
+{% extends "pizza/base.html"%}
+{% block title %} urses {% endblock %}
+{% block js %}
+<script src="/static/order.js"></script>
+{% endblock%}
+{% block body %}
+<div class="container-fluid border">
+    <ul id='' class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link mi"  value='pizza' >pizza</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link active mi"  value='subs'>subs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link mi"  value='pasta'>pasta</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link mi"  value='salads'>salads</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link mi"  value='dinner'>dinner Platters</a>
+        </li>
+    </ul>
+</div>
+
+
+<h1>here is the menu</h1>
+{% for item in menuItem %}
+    <h3>{{item.name}}</h3>
+    <ol>
+    {% for toping in Topings %}
+        {% if toping.toping == item.toping %}
+            <li>{{toping.name}}</li>
+        {% endif %}
+    {% endfor %}
+    </ol>
+{% endfor %}
+<h1>here you can make an order</h1>
+
+
+<select id='menuItem' >
+    <option value="None">please select one</option>
+    {% for item in menuItem %}
+
+    <option value="{{item.name}}">{{ item }}</option>
+
+    {% endfor %}
+  </select>
+  <br>
+  <div>
+  {% for toping in Topings%}
+  <input type="checkbox" name="{{toping.name}}" value="Bike">{{ toping.name }}<br>
+  {% endfor %}
+<h1>shpping cart</h1>
+<ul id='shopping_cart'>
+
+</ul>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <script src="/static/order.js"></script>
+    {% block js %}
+    {% endblock%}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock %}</title>
+    <link href="/static/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Courgette&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<ul class="mainMenu">
+    {% if not user == 'none' %}
+    <li><a href="#" onclick="myorder()">My Order<span id="numberOfItems" class="badge badge-light"></span></a></li>
+    <li><a href="/logout">Logout</a></li>
+    {% endif %}
+    {% if user == 'none' %}
+    <li><a id="login" href="">Login</a></li>
+    {% endif %}
+    <li><a href="#contact">Contact Us</a></li>
+    <li><a href="#menu">Our Menu</a></li>
+    <li><a href="/menu">Order Online</a></li>
+    <li><a href="/">Home</a></li>     
+</ul>
+<div class="hero-image">
+    <div class="hero-text">
+        <span class="top"> The best Pizza In Canada</span>
+        <p>CS50 Project by Alexy Kotliar</p>
+    </div>
+</div>
+
+{% if not user == 'none' %}
+<script>
+    let orderItems = JSON.parse(localStorage.getItem('myOrder'));
+    document.querySelector('#numberOfItems').innerHTML = orderItems.length;
+</script>
+{% endif %}
+
+{% if error != 'none' %}
+    <script> document.querySelector('#error').style.display = 'block';    </script>
+{% endif %}
+
+
+    {% block body %}
+
+
+
+
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+{% extends "pizza/base.html" %}
+{% block title %}login{% endblock %}
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded',() => {
+        document.querySelector('#register').onclick = () => {
+            console.log('going to onclick function')
+            document.querySelector("#register-form").style.display = 'block';
+            document.querySelector('#login-form').style.display = 'none'
+            return false
+        };
+        document.querySelector('#login').onclick = () => {
+            document.querySelector("#register-form").style.display = 'none';
+            document.querySelector('#login-form').style.display = 'block'
+        }
+    });
+
+
+</script>
+{% endblock%}
+{% block body %}
+<div class="container" id="login-form">
+    <form action="loginSend", method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>User Name</label>
+            <input name='username' class="form-control" placeholder="type your user name">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input name='password' type="password" class="form-control" placeholder="type your password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        or <button class="btn btn-primary" id="register">register</button>
+    </form>
+</div>
+
+<div class="container" id="register-form">
+    <form action="register" method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Select a user name</label>
+            <input name="userName"class="form-control"  placeholder="type your user name">
+        </div>
+        <div class="form-group">
+            <label>Select a Password</label>
+            <input name="password" type="password"  class="form-control" placeholder="type your password">
+        </div>
+        <div class="form-group">
+            <label>Enter your first name</label>
+            <input name="firstName"class="form-control"  placeholder="type your user name">
+        </div>
+        <div class="form-group">
+            <label>Enter your last name</label>
+            <input name="lastName"class="form-control"  placeholder="type your user name">
+        </div>
+        <div class="form-group">
+            <label>Enter an email address</label>
+            <input name="email" type="email" class="form-control" placeholder="type your password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        or <button class="btn btn-primary" id="login">login</button>
+        
+    </form >
+</div>
+{% endblock %}

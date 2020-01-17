@@ -1,0 +1,188 @@
+{% extends "pizza/base.html"%}
+{% block title %} CS50 Pizzeria {% endblock %}
+{% block body %}
+<span hidden id='token'>{% csrf_token %}</span>
+<!--register form-->
+<div id='register' class="form-popup">
+    <P class="close">X</P><br>
+    <form action="register" method="POST">
+        {% csrf_token %}
+        <label>Select a user name</label>
+        <input name="userName"class="form-control" type="text"  placeholder="type your user name">
+        <!--<label>Select a Password</label>-->
+            <input name="password" type="password"  class="form-control" placeholder="type your password">
+            <label>Enter your first name</label>
+            <input name="firstName"class="form-control"  type="text" placeholder="First name">
+            <label>Enter your last name</label>
+            <input name="lastName"class="form-control" type="text" placeholder="Last name">
+            <label>Enter an email address</label>
+            <input name="email" type="text" class="form-control" placeholder="Email">
+
+        <button type="submit" >Submit</button>
+        or <button id="login">login</button>
+        
+    </form >
+    
+</div>
+<!--end of register form-->
+
+
+
+
+<!--error message-->
+
+<div id='error' class="form-popup">
+    <P class="close">X</P><br>
+    <h3>Error</h3>
+    <p>{{error}}</p>
+    <input id="openLogin" type="submit" name="" value="Login">
+    <input id="OpenRegister" type="submit" name="" value="Register">
+    
+</div>
+<!-- end of error message-->
+
+
+<!-- login form-->
+<div id='loginForm' class="form-popup">
+    <P class="close">X</P><br>
+    <h3>Login</h3>
+    <form action="loginSend", method="post">
+        {% csrf_token %}
+        <input name='username' type="text" placeholder="User Name">
+        <input name='password' type="password"  placeholder="password"><br><br>
+        <input type="submit" name="" value="Login">
+        <input id="registerBtn" type="submit" value="Register">
+
+    </form>
+</div>
+<!-- end of login form-->
+
+<!-- please log in form -->
+
+<div id='PleaseLogin' class="form-popup">
+    <P class="close">X</P><br>
+    <h3>To make an Order Please login first</h3>
+    <form>
+        <input id="openLogin" type="submit" name="" value="Login">
+        <input id="OpenRegister" type="submit" name="" value="Register">
+    </form>
+</div>
+
+<!-- end please login message -->
+
+
+
+<!--add to order form-->
+<div id='addToOrder' class="form-popup">
+    <p id='closetest' class="close">X</p><br>
+    <h3>Add to your Order</h3>
+    <p><button onclick="addToOrder()">add to order</button> your price is <span id='product_price'></span></p>
+    <form action="">
+        <div id="itemName"></div>
+        <div id="option"></div>
+        <ol id="toppingsList">
+        </ol>
+        
+    </form>
+    
+</div>
+<!--end add to order popup message -->
+
+
+<!--my order form-->
+<div id='myOrder' class="form-popup">
+    <p class="close">X</p><br>
+    <p id="myOrderList"></p>
+    <button id="conform">conform order</button>
+
+    
+</div>
+<!--end my order form-->
+
+
+<!--edded to order block-->
+<div id='addedToOrder' class="form-popup">
+    <p class="close" onclick="close()">X</p><br>
+    <img src="/static/v.png" alt="added to your order">
+    
+</div>
+<!--end added to order block-->
+
+<div class="container-flex">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 ">
+            <a name="menu"></a>
+            <center><h1 class="headLine">Pizza & More</h1></center>
+            <h3 class="headLine">Pizza</h3>
+            <table style="width:100%">
+                <tr>
+                    <th>Pizza</th>
+                    <th>Small</th>
+                    <th>Large</th>
+                    <th>Order</th>
+                </tr>
+            {% for item in menuItems %}
+            
+                {% if item.category == 'pizza' %}
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.large}}</td>
+                    <td><button class="plus" data-name="{{item.name}}" data-id='{{item.id}}' data-user='{{user}}'>+</button></td>
+                </tr>
+                {% endif %}
+            
+            {% endfor %}
+        </table>
+        <h3 class="headLine">Pizza Topings</h3>
+        {% for item in topings %}
+            {% if item.toping == 1 %}
+                {{item.name}} <br>
+                {% endif %}
+        {% endfor %}
+            <h3 class="headLine">Subs</h3>
+            <table style="width: 100%;">
+                <tr>
+                    <th>Sub</th>
+                    <th>Small</th>
+                    <th>Large</th>
+                </tr>
+            {% for item in menuItems %}
+                {% if item.category == 'sub' %}
+                <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.large}}</td>
+                <td><button class="plus" data-name="{{item.name}}" data-id='{{item.id}}' data-user='{{user}}'>+</button></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        </div>
+        <div class="col-7 test2">
+            this is the user
+            {{user.username}}
+            <input type="checkbox" class="topings1">1</input>
+            </div>
+        </div>
+        <div class="col-1"></div>
+
+    </div>
+
+</div>
+<a name="contact"></a>
+<div class="hero-image1">
+    <div class="hero-text1">
+        <span class="top"> Our locations</span>
+        <p>74 Winthrop Street
+            Harvard Square
+            617-876-4897</p>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
